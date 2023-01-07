@@ -208,6 +208,26 @@ Pt a face MERGE intre branch ul nou pt teste si main:
 
 git merge -m "Merge fixsalaries back to main" FixSalaries  (deci trebuie precizat branch-ul la sfarsit)
 
+Acum ca am facut merge-ul , nu mai am nevoie de branch-ul nou, asa ca pt a-l sterge:
+
+git branch -d FixSalaries
+
+---Acum ne ocupam de cazul cand am vrea sa dam merge intre un branch creat de noi si main
+DAR in cazul in care main a avut modificari, nu va merge pt ca vor fi conflicte
+asa ca pt a rezolva MERGE Conflicts:
+
+cream din nou un branch nou, exista o comanda care face si switch si create direct pe noul branch:
+
+git switch -c "Update WordDoc"   (! deci -c e de la create, si ATENTIE nu pot exista spatii, adica "Update WordDoc" nu va merge , trebuie "UpdateWordDoc"
+
+Deci acum tot ce apare in folder, fisierele adica, ele reflecta bracnh-ul pe care sunt, adica UpdateWordDoc in momentul asta
+
+Am modificat WordDoc-ul punanad "Ana are banane" si dau commit in bash:
+
+git commit -a -m "update WordDoc to banane"
+
+
+
 
 
 
