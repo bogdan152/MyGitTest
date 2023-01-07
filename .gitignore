@@ -1,2 +1,6 @@
 # ignore all .txt files
+<<<<<<< HEAD
 # *.txt
+=======
+*.txt  # pt a comenta
+>>>>>>> FixSalaries

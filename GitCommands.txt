@@ -1,0 +1,227 @@
+Setare user name si email pt identifica cine face modificarile:
+(merge si cu ghilimele si fara)
+git config --global user.name "Bogdan"
+git config --global user.email curculescu.bogdan@yahoo.com
+
+Se poate verifica username-ul si email-ul setat cu:
+git config --list
+
+Initializare default branch:
+git config --global init.default branch main
+Nu am rulat asta pt ca era deja definita de la instalarea git
+
+Setare calea catre fisierul dorit:
+cd c:/W.O.R.K/Projects/MyGit
+urmat de :
+
+git init
+Initialized empty Git repository in C:/W.O.R.K/Projects/MyGit/.git/
+si automat se creaza fisierul .git (hidden file) in folderul c:/W.O.R.K/Projects/MyGit
+adica am creat repository-ul. Acest .git hidden file contine toate fisierele necesare pt repository.
+
+
+Acum ca am creat repository-ul putem verifica statusul cu:
+
+git status
+
+Aici vedem pe ce branck suntem, ce commits sunt facute si ce fisiere sunt tracked sau nu
+
+Fisierele care nu sunt tracked, git nu va sti de ele in caz ca se schimba ceva la ele
+Pentru a face track pt fisiere se foloseste:
+asta e varianta pt a le face pe rand:
+
+git add index.htm
+git add Photo.png
+git add Salaries.txt
+git add WordDoc.docx
+
+se poate verifica ca acum e tracked tot cu : git status
+
+Pentru a face untrack(unstage) la un fisier se foloseste:
+
+git rm --cached index.htm (la fel se poate verifica cu: git status)
+
+Pentru a ignora anumite fisiere(foldere) sau intregi extensii pt ca sunt fisiere sensibile, gen salarii:
+Se creeaza in file explorer in calea mea de repository un fisier txt, pe care
+il redenumesc ca :
+
+.gitignore
+
+Il desschid cu orice editor si pot pune un comentariu cu # ca de ex pt a ignora toate fisierele .txt:
+# ignore all .txt files
+*.txt
+
+Pt a vedea toate optiunile pt a folosi .gitignore: 
+https://github.com/github/gitignore
+
+Acum daca verific cu : git status
+Nu mai trebuie sa apara niciun fisier .txt in lista, deci chiar daca e untracked, nu ar mai trebui sa apara in lista
+dar va aparea acest .gitignore in lista, ceea ce e normal
+
+Pentru a face track la toate fisierele (mai putin la cele specificate in .gitignore):
+Deci pt a face track la toate fisierele(nu a le lua pe rand):
+
+git add --all     sau (git add -A) sau (git add .) pt intregul folder
+
+*** DECI ACUM ca le-am dat track inseamna ca ele sunt in STAGING, dar inca nu le-am dat Commit
+Commit inseamna sa fac un SNAPSHOT in momentul asta pt toate fisierele din staging(adica care sunt tracked)
+Astfel dupa ce fac commit, ma pot intoarce oricand la ce am facut snapshot
+
+Pentru a face commit (pt fisiere din staging):
+(pot sa pun si un comentariu intre ghilimele pt acest commit)
+
+git commit -m "first commit - commiting all files to the repository"
+
+Daca dau acum: git status; imi zice ca Nothing to commit, working tree clean
+
+Acum sa zicem ca vreau sa modific un fisier din cele pe care le-am comis:
+WordDoc.docx - am modificat din Ana are mere in Ana are pere
+Acum daca dau : git status; o sa imi apara ca WordDoc.docx este modified
+
+Si daca vreau sa vad si diferentele, dau:
+
+git diff
+
+si vad ca diferenta este "-Ana are mere cu rosu" si "+Ana are pere cu verde"
+Deci ce e cu rosu era inainte, ce este cu verde este acum
+
+Daca sunt multumit cu schimbarile si vreau sa dau commit, trebuie sa incep cu staging, adica cu:
+
+git add WordDoc.docx  (adica il pun in staging si de abia acum pot sa dau commit, ca sa faca snapshot si deci sa ramana inregistrat)
+
+Deci putem spune ca STAGING este locul(punctul) in care fisierele stau inainte de a le da commit
+Ca si cum ai tine un stilou in mana, pregatit sa scrii cu el
+In Git avem 3 environments:
+-- Working Files, locul unde poti sa editezi fisierele
+-- Staging, locul unde pui fisierele inainte sa le poti da commit, adica sa le adaugi in snapshot
+-- Commit, locul unde s-a intregistrat in log acel fisier, si poti reveni oricand la el
+
+Daca vreau sa il scot pe acest fisier WordDoc.docx din Staging, dau:
+
+git restore --staged WordDoc.docx    si astfel el se muta in Working Files environment, si daca dau commit nu va face nimic cu el
+
+!!! atentie ca e diferit fata de comanda de mai sus care cica tot unstage(untrack face) si anume:
+git rm --cached WordDoc.docx  care ii face untrack dar din ce vad tot ramane in staging si ii pot da commit NU IMI E CLAR !!!
+
+DECI daca dau acum commit nu va face nimic, pt ca WordDoc.docx chiar daca e modificat nu e in staging
+pt ca am aplicat comanda : git restore --staged WordDoc.docx
+
+Deci ori ii dau iar : git add WordDoc.docx, ORI Fac ByPass de staging si ii dau direct commit
+CHIAR DACA E in WorkingFiles:
+
+git commit -a -m "updated text to pere"
+
+Acum daca verific cu git status : Nothing to commit, working tree clean
+
+
+Stergerea unui fisier:
+
+Se poate din console cu : git rm "Photo.png"
+Sau direct din Folder right click delete
+
+Acum cu git status: se vede ca a fost sters
+Daca ma razgandesc, pot sa ii fac restore cu :
+
+git restore "Photo.png"
+
+Deci asta e un avantaj daca se foloseste git, se poate reveni la un fisier oricand,
+DACA EL A FOST COMITTED
+
+
+Redenumirea unui fisier:
+
+Se poate din consola: git mv "Photo.png" "NewNamePhoto.png"  (mv de la move)
+Sau direct din Folder right click Rename
+
+Acum ca am schimbat numele, apare si la git status, trebuie sa dau commit (daca vreau sa se inregistreze schimbarea)
+
+git commit -m "changnnnged the file name of an image"
+
+si acum iarasi cu git status: Nothing to commit, working tree clean
+Pt ca totul e OK acum, e commited tot
+
+ACUM dupa atatea modificari si commit-uri daca vreau sa vad tot ce s-a facut pana acum:
+
+git log
+
+aici vedem fiecare commit care are cate un:
+id guid
+author
+date
+si textul pe care l-am pus cand am dat commit
+
+pot sa dau si comanda (pt a le vedea pe o singura linie)
+git log --oneline
+
+DACA vreau sa schimb textul (mesajul) vreunui commit pt ca poate am scris gresit:
+
+git commit -m "Changed file name to NewNamePhoto.png" --amend
+!! cred ca merge daca vreau sa schimb textul pentru ultimul commit, pt primul nush cum trebuie facut
+
+Daca vreau sa vad ce s-a comis cu detalii, dau:
+
+git log -p   !!!!(atentie se iese cu tasta Q din acest view)
+
+Pt mai multe detalii despre log : comanda: git help log (va deschide un manual in browser)
+
+
+O chestie misto este ca pot sa ma intorc la un previous commit, cu comanda:
+
+git reset 7078fde      (acest 7078fde este inceputul id guid-ului commit-ului)
+Dar nu voi da comanda asta
+
+Deasemenea se poate si modifica ce apare in history book si ordinea lor:
+git rebase -i --root  (se va deschide un notepad cu comenzi pe care le pot face)
+Advanced stuff nu am intrat in detalii, doar sa vedem ca se poate daca vrem
+
+
+BRANCH cum se creeaza una noua pe langa cea de main
+
+Deci pana acum am facut modificari branch-ului main (principal)
+Dar pot crea si branch uri aditionale
+Adica e o copie a bracnh ului main, DAR pot lucra la un feature nou care nu va afecta main-ul pana nu sunt sigur ca e ok
+Si dupa aceea pot sa fac merge in branch-ul main
+
+git branch FixSalaries   - va crea o noua branch, pe langa cea existenta main
+
+Daca dau : git branch   imi va aparea:
+FixSalaries
+* main (cu verde) asta inseamna ca sunt inca in main, chiar daca tocmai am creat una noua
+
+Ca sa trec, sa comut pe alt branch , trebuie:
+
+git switch FixSalaries
+
+si acum daca dau: git branch  (va aparea cu *FixSalaries si cu verde, adica sunt pe ea acum
+
+Deci acum ma duc in Folder si modific Salaries.txt (pun 2000 in loc de 1000)
+
+Daca dau git status: imi apare ca sunt pe
+On branch FixSalaries
+si modificarea din 1000 in 2000
+
+Acum ca sa dau commit:
+
+git commit -a -m "updated salaries for new branch FixSalaries"
+
+Pt a face MERGE intre branch ul nou pt teste si main:
+
+git merge -m "Merge fixsalaries back to main" FixSalaries  (deci trebuie precizat branch-ul la sfarsit)
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
