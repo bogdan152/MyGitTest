@@ -236,6 +236,18 @@ Si dau si commit:
 
 git commit -a -m "update WordDoc to smochine - when in main branch"
 
+DECI ACUM AM CONFLICTE pentru ca am modificat fisierul WordDoc.docx in ambele branch-uri:
+-in main este cu smochine
+-in UpdateWordDoc este cu banane
+ASTFEL MERGE-ul nu va merge pt ca va trebui sa rezolv conflictele, in cazul meu:
+CONFLICT (content): Merge conflict in GitCommands.txt
+CONFLICT (content): Merge conflict in WordDoc.docx
+
+si de notat ca sunt in branch-ul  (main|MERGING), o combinatie adica pana cand rezolv conflictele
+
+
+
+
 
 
 
